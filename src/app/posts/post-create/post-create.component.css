@@ -13,3 +13,7 @@ mat-spinner {
     justify-content: center;
     align-items: center;
 }
+
+input[type="file"] {
+    visibility: hidden;
+}
