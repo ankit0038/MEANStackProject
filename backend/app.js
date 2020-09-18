@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const path = require("path");
 
 const postsRoutes = require("./routes/posts");
 const app = express();
@@ -14,6 +14,7 @@ mongoose.connect("mongodb+srv://max:jJtrC3G7jigZax3l@cluster0.7yd6l.mongodb.net/
 });
 
 app.use(bodyParser.json());
+app.use("/images", express.static(path.join("backend/images")));
 
 // the following code block will allow other domains to access resources at our server
 
