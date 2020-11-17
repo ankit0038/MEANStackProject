@@ -48,7 +48,8 @@ router.post("/login", (req, res, next) => {
         const token = jwt.sign({email: user.email, userId: user._id}, 'secret_this_should_be_longer', {expiresIn: "1h"}); // this sign method will generate the token
         console.log(token);
         res.status(200).json({
-            token: token
+            token: token,
+            expiresIn: 3600
         });
     })
     .catch(err => {

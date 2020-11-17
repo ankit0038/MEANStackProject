@@ -12,9 +12,12 @@ export class SignUpComponent {
     constructor(public authService: AuthService) {}
 
     onSignup(form: NgForm) {
+        console.log("onSignup clicked");
         if(form.invalid) {
             return ;
         }
-        this.authService.creareUser(form.value.email, form.value.password);
+        console.log("onSignup clicked");
+        this.isLoading = true;
+        this.authService.createUser(form.value.email, form.value.password);
     }
 }
