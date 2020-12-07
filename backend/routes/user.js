@@ -30,13 +30,19 @@ router.post("/signup", (req, res, next) => {
 });
 
 router.post("/login", (req, res, next) => {
+    console.log("login request");
+    fetchedUser = null;
     User.findOne({email: req.body.email })
     .then(user => {
+        
         if(!user) {
+            console.log("user not found");
             return res.status(401).json({
                 message: "email does not exist!"
             });
         }
+        fetchedUser = user;
+        console.log("user "+fetchedUser);
         return bcrypt.compare(req.body.password, user.password);
     })
     .then(result => {
@@ -45,17 +51,20 @@ router.post("/login", (req, res, next) => {
                 message: "Auth failed"
             });
         }
-        const token = jwt.sign({email: user.email, userId: user._id}, 'secret_this_should_be_longer', {expiresIn: "1h"}); // this sign method will generate the token
+        console.log("user email ", fetchedUser.email, fetchedUser._id);
+        const token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id}, 'secret_this_should_be_longer', {expiresIn: "1h"}); // this sign method will generate the token
         console.log(token);
         res.status(200).json({
             token: token,
-            expiresIn: 3600
+            expiresIn: 3600,
+            userId: fetchedUser._id
         });
     })
     .catch(err => {
+        console.log(err);
         return res.status(401).json({
             message: "Auth failed"
-        });
+        }); 
     });
 });
 
