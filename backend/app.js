@@ -8,7 +8,9 @@ const userRoutes = require("./routes/user");
 
 const app = express();
 
-mongoose.connect("mongodb+srv://max:jJtrC3G7jigZax3l@cluster0.7yd6l.mongodb.net/posts?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology:true }).then(() => {
+
+// process.env.MONGO_ATLAS_PW  this helps us to inject global variable into running node code
+mongoose.connect("mongodb+srv://max:"+ process.env.MONGO_ATLAS_PW +"@cluster0.7yd6l.mongodb.net/posts?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology:true }).then(() => {
     console.log("connected to database");
 }).catch((err) => {
     console.log(err);
